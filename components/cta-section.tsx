@@ -6,7 +6,7 @@ import Link from "next/link"
 export function CTASection() {
   return (
     <section id="dashboard" className="py-20 md:py-32">
-      <div className="container">
+      <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-5xl">
           <Card className="relative overflow-hidden border-border bg-gradient-to-br from-primary/10 via-accent/10 to-primary/5">
             <div className="relative z-10 px-6 py-16 md:px-12 md:py-24">

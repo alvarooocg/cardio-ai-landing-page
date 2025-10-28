@@ -19,6 +19,8 @@ import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { ChatbotWidget } from "@/components/chatbot-widget"
 import { PersonalizedSuggestions } from "@/components/personalized-suggestions"
+import { RiskPredictionCard } from "@/components/risk-prediction-card"
+import { AnomalyHistoryCard } from "@/components/anomaly-history-card"
 
 // Mock data for BPM trends (last 7 days)
 const bpmTrendData = [
@@ -67,16 +69,49 @@ export default function DashboardPage() {
   const maxBpm = 95
   const minBpm = 62
 
+  const riskPrediction = {
+    riskLevel: "medium" as const,
+    riskPercentage: 35,
+    factors: [
+      {
+        name: "Edad (45 años)",
+        impact: "negative" as const,
+        description: "El riesgo cardiovascular aumenta con la edad",
+      },
+      {
+        name: "Fumador",
+        impact: "negative" as const,
+        description: "Fumar aumenta significativamente el riesgo de enfermedades cardíacas",
+      },
+      {
+        name: "BPM Promedio Normal",
+        impact: "positive" as const,
+        description: "Tu frecuencia cardíaca promedio está en rango saludable",
+      },
+      {
+        name: "Hipertensión",
+        impact: "negative" as const,
+        description: "La presión arterial alta es un factor de riesgo importante",
+      },
+    ],
+    recommendations: [
+      "Considera dejar de fumar para reducir tu riesgo en un 50% en los próximos 2 años",
+      "Mantén una dieta baja en sodio para controlar la hipertensión",
+      "Realiza 30 minutos de ejercicio cardiovascular moderado 5 días a la semana",
+      "Programa una consulta con tu médico para evaluar tu presión arterial",
+    ],
+  }
+
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
       <main className="flex-1 bg-background">
-        <div className="container py-8">
+        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
           {/* Page Header */}
-          <div className="mb-8 flex items-center justify-between">
+          <div className="mb-8 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
             <div>
               <h1 className="text-3xl font-bold tracking-tight">Dashboard de Salud Cardíaca</h1>
-              <p className="text-muted-foreground mt-2">Monitorea tu frecuencia cardíaca y tendencias de salud</p>
+              <p className="text-muted-foreground mt-2">Monitoreo inteligente con detección de anomalías mediante IA</p>
             </div>
             <div className="flex gap-3">
               <Button variant="outline" className="gap-2 bg-transparent">
@@ -90,8 +125,17 @@ export default function DashboardPage() {
             </div>
           </div>
 
+          <div className="mb-8">
+            <RiskPredictionCard
+              riskLevel={riskPrediction.riskLevel}
+              riskPercentage={riskPrediction.riskPercentage}
+              factors={riskPrediction.factors}
+              recommendations={riskPrediction.recommendations}
+            />
+          </div>
+
           {/* Key Metrics Cards */}
-          <div className="mb-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          <div className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <Card>
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium">BPM Actual</CardTitle>
@@ -227,6 +271,10 @@ export default function DashboardPage() {
                 </ChartContainer>
               </CardContent>
             </Card>
+          </div>
+
+          <div className="mb-8">
+            <AnomalyHistoryCard />
           </div>
 
           {/* Tabs Section */}

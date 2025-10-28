@@ -1,14 +1,21 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Activity } from "lucide-react"
+import Image from "next/image"
+import { createClient } from "@/lib/supabase/server"
+import { UserNav } from "@/components/user-nav"
 
-export function Header() {
+export async function Header() {
+  const supabase = await createClient()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center justify-between">
-        <Link href="/" className="flex items-center gap-2">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
-            <Activity className="h-6 w-6 text-primary-foreground" />
+      <div className="container max-w-7xl mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
+        <Link href="/" className="flex items-center gap-3">
+          <div className="bg-white rounded-lg p-1">
+            <Image src="/cardioai-logo.png" alt="CardioAI Logo" width={48} height={48} className="h-12 w-12" />
           </div>
           <span className="text-xl font-bold">CardioAI</span>
         </Link>
@@ -21,7 +28,7 @@ export function Header() {
             Funcionalidades
           </Link>
           <Link
-            href="#dashboard"
+            href="/dashboard"
             className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
           >
             Dashboard
@@ -35,12 +42,18 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-4">
-          <Button variant="ghost" asChild>
-            <Link href="/auth/login">Iniciar Sesión</Link>
-          </Button>
-          <Button asChild>
-            <Link href="/auth/sign-up">Comienza Ahora</Link>
-          </Button>
+          {user ? (
+            <UserNav user={user} />
+          ) : (
+            <>
+              <Button variant="ghost" asChild>
+                <Link href="/auth/login">Iniciar Sesión</Link>
+              </Button>
+              <Button asChild>
+                <Link href="/auth/sign-up">Comienza Ahora</Link>
+              </Button>
+            </>
+          )}
         </div>
       </div>
     </header>

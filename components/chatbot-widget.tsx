@@ -27,17 +27,19 @@ const initialMessages: Message[] = [
 ]
 
 const mockResponses: Record<string, string> = {
-  bpm: "Tu BPM actual de 75 está dentro del rango normal para un adulto en reposo (60-100 BPM). Tu promedio semanal de 73 BPM indica una buena salud cardiovascular. ¿Te gustaría saber más sobre cómo mejorar tu frecuencia cardíaca?",
-  elevado:
-    "Noté que el 27 de enero registraste un BPM de 95, que está ligeramente elevado. Esto puede ser normal después de ejercicio, estrés o consumo de cafeína. Si experimentas BPM elevado frecuentemente en reposo, te recomiendo consultar con un médico.",
+  bpm: "Tu BPM actual de 75 está dentro del rango normal. Sin embargo, basándome en tu perfil (45 años, fumador, hipertensión), te recomiendo mantener un monitoreo constante y seguir las recomendaciones de tu médico.",
+  riesgo:
+    "Según el análisis de IA, tu riesgo cardiovascular es moderado (35%). Los principales factores son: edad, tabaquismo e hipertensión. La buena noticia es que puedes reducir este riesgo significativamente dejando de fumar y controlando tu presión arterial.",
+  fumar:
+    "Dejar de fumar es la acción más importante que puedes tomar para tu salud cardíaca. Reducirá tu riesgo cardiovascular en un 50% en los próximos 2 años. ¿Te gustaría que te recomiende recursos para dejar de fumar?",
+  hipertension:
+    "Para controlar tu hipertensión, te recomiendo: 1) Reducir el consumo de sal a menos de 2g al día, 2) Hacer ejercicio regular, 3) Mantener un peso saludable, 4) Tomar tu medicación según prescripción médica. ¿Necesitas ayuda con alguno de estos puntos?",
   ejercicio:
-    "Para mejorar tu salud cardiovascular, te recomiendo: 1) 150 minutos de ejercicio moderado por semana, 2) Incluir ejercicios aeróbicos como caminar, nadar o ciclismo, 3) Mantener una rutina constante. ¿Quieres que te sugiera un plan de ejercicios personalizado?",
-  dieta:
-    "Una dieta saludable para el corazón incluye: 1) Frutas y verduras frescas, 2) Granos enteros, 3) Pescado rico en omega-3, 4) Reducir sal y grasas saturadas. ¿Te gustaría recibir recetas saludables para el corazón?",
-  sueño:
-    "El sueño de calidad es crucial para la salud cardíaca. Te recomiendo: 1) Dormir 7-9 horas por noche, 2) Mantener un horario regular, 3) Evitar pantallas antes de dormir. Un buen descanso puede reducir tu BPM en reposo hasta un 10%.",
+    "Basándome en tu perfil, te recomiendo comenzar con ejercicio moderado: caminatas de 30 minutos, 5 días a la semana. Esto ayudará a controlar tu presión arterial y reducir tu riesgo cardiovascular. Siempre consulta con tu médico antes de comenzar un nuevo programa de ejercicios.",
+  anomalia:
+    "La IA detectó una taquicardia el 27 de enero (125 BPM en reposo). Esto puede ser causado por estrés, cafeína o actividad física reciente. Si experimentas palpitaciones frecuentes, dolor en el pecho o mareos, consulta inmediatamente con un médico.",
   default:
-    "Entiendo tu pregunta. Basándome en tus datos recientes, tu salud cardiovascular está en buen estado. Tu BPM promedio de 73 es saludable. ¿Hay algo específico sobre tus mediciones que te gustaría que analice?",
+    "Entiendo tu pregunta. Basándome en tu perfil de salud (45 años, fumador, hipertensión), es importante que sigas las recomendaciones médicas y mantengas un estilo de vida saludable. ¿Hay algo específico sobre tu salud cardíaca que te preocupe?",
 }
 
 export function ChatbotWidget() {
@@ -65,20 +67,27 @@ export function ChatbotWidget() {
   const getResponse = (userMessage: string): string => {
     const lowerMessage = userMessage.toLowerCase()
 
+    if (lowerMessage.includes("riesgo") || lowerMessage.includes("predicción")) {
+      return mockResponses.riesgo
+    }
+    if (lowerMessage.includes("fumar") || lowerMessage.includes("tabaco") || lowerMessage.includes("cigarrillo")) {
+      return mockResponses.fumar
+    }
+    if (lowerMessage.includes("hipertensión") || lowerMessage.includes("presión")) {
+      return mockResponses.hipertension
+    }
+    if (
+      lowerMessage.includes("anomalía") ||
+      lowerMessage.includes("taquicardia") ||
+      lowerMessage.includes("irregular")
+    ) {
+      return mockResponses.anomalia
+    }
     if (lowerMessage.includes("bpm") || lowerMessage.includes("frecuencia")) {
       return mockResponses.bpm
     }
-    if (lowerMessage.includes("elevado") || lowerMessage.includes("alto")) {
-      return mockResponses.elevado
-    }
     if (lowerMessage.includes("ejercicio") || lowerMessage.includes("actividad")) {
       return mockResponses.ejercicio
-    }
-    if (lowerMessage.includes("dieta") || lowerMessage.includes("comida") || lowerMessage.includes("alimentación")) {
-      return mockResponses.dieta
-    }
-    if (lowerMessage.includes("sueño") || lowerMessage.includes("dormir") || lowerMessage.includes("descanso")) {
-      return mockResponses.sueño
     }
 
     return mockResponses.default
@@ -228,23 +237,23 @@ export function ChatbotWidget() {
                 <Badge
                   variant="outline"
                   className="cursor-pointer hover:bg-accent transition-colors"
-                  onClick={() => setInputValue("¿Cómo está mi BPM?")}
+                  onClick={() => setInputValue("¿Cuál es mi nivel de riesgo?")}
                 >
-                  ¿Cómo está mi BPM?
+                  Mi nivel de riesgo
                 </Badge>
                 <Badge
                   variant="outline"
                   className="cursor-pointer hover:bg-accent transition-colors"
-                  onClick={() => setInputValue("Consejos de ejercicio")}
+                  onClick={() => setInputValue("¿Cómo dejo de fumar?")}
                 >
-                  Consejos de ejercicio
+                  Dejar de fumar
                 </Badge>
                 <Badge
                   variant="outline"
                   className="cursor-pointer hover:bg-accent transition-colors"
-                  onClick={() => setInputValue("Dieta saludable")}
+                  onClick={() => setInputValue("Controlar hipertensión")}
                 >
-                  Dieta saludable
+                  Controlar hipertensión
                 </Badge>
               </div>
             </div>

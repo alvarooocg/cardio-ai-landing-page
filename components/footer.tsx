@@ -1,15 +1,16 @@
 import Link from "next/link"
-import { Activity, Mail, Phone } from "lucide-react"
+import { Mail, Phone } from "lucide-react"
+import Image from "next/image"
 
 export function Footer() {
   return (
     <footer className="border-t border-border bg-card">
-      <div className="container py-12 md:py-16">
+      <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           <div>
-            <Link href="/" className="flex items-center gap-2 mb-4">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
-                <Activity className="h-6 w-6 text-primary-foreground" />
+            <Link href="/" className="flex items-center gap-3 mb-4">
+              <div className="bg-white rounded-lg p-1">
+                <Image src="/cardioai-logo.png" alt="CardioAI Logo" width={48} height={48} className="h-12 w-12" />
               </div>
               <span className="text-xl font-bold">CardioAI</span>
             </Link>
