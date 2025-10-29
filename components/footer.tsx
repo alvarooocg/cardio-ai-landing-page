@@ -9,7 +9,7 @@ export function Footer() {
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           <div>
             <Link href="/" className="flex items-center gap-3 mb-4">
-              <div className="bg-white rounded-lg p-1">
+              <div className="rounded-lg p-1">
                 <Image src="/cardioai-logo.png" alt="CardioAI Logo" width={48} height={48} className="h-12 w-12" />
               </div>
               <span className="text-xl font-bold">CardioAI</span>

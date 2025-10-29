@@ -35,10 +35,26 @@ export default async function ProfilePage() {
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 py-12">
       <div className="container max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-8">
-          {/* Header */}
-          <div className="flex flex-col gap-2">
-            <h1 className="text-4xl font-bold text-white">Mi Perfil</h1>
-            <p className="text-slate-400">Gestiona tu información personal y de salud</p>
+          {/* Header: reemplazado por header igual al del dashboard */}
+          <div className="flex items-center justify-between gap-4">
+            <div>
+              <h1 className="text-4xl font-extrabold text-white">Mi Perfil</h1>
+              <p className="text-slate-400">Gestiona tu información personal y de salud</p>
+            </div>
+            <div className="flex items-center gap-3">
+              <a
+                href="/dashboard"
+                className="rounded-md bg-white/5 px-3 py-2 text-sm text-white hover:bg-white/10 cursor-pointer"
+              >
+                Ir al Dashboard
+              </a>
+              <a
+                href="/settings"
+                className="rounded-md bg-white/5 px-3 py-2 text-sm text-white hover:bg-white/10 cursor-pointer"
+              >
+                Ajustes
+              </a>
+            </div>
           </div>
 
           {/* Personal Information Card */}

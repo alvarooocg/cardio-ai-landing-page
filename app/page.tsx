@@ -5,6 +5,7 @@ import { BenefitsSection } from "@/components/benefits-section"
 import { HowItWorksSection } from "@/components/how-it-works-section"
 import { TestimonialsSection } from "@/components/testimonials-section"
 import { CTASection } from "@/components/cta-section"
+import { ContactSection } from "@/components/contacto-section"
 import { Footer } from "@/components/footer"
 import { ChatbotWidget } from "@/components/chatbot-widget"
 
@@ -19,6 +20,7 @@ export default function HomePage() {
         <HowItWorksSection />
         <TestimonialsSection />
         <CTASection />
+        <ContactSection />
       </main>
       <Footer />
       <ChatbotWidget />
